@@ -24,10 +24,8 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { AlertModal } from "@/components/modals/alert-modal";
 import { Input } from "@/components/ui/input";
-import { ApiAlert } from "@/components/ui/api-alert";
 import { useOrigin } from "@/hooks/use-origin";
 import ImageUpload from "@/components/ui/image-upload";
-import { url } from "inspector";
 
 const formSchema = z.object({
   label: z.string().min(1),
@@ -45,7 +43,6 @@ const BillboardForm: React.FC<BillboardFormProps> = ({
 }) => {
   const params = useParams();
   const router = useRouter();
-  const origin = useOrigin();
 
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -70,27 +67,36 @@ const BillboardForm: React.FC<BillboardFormProps> = ({
   const onSubmit = async (data: BillboardFormValues) => {
     try {
       setLoading(true);
-      await axios.patch(`/api/stores/${params.storeId}`, data);
+      if (initialData) {
+        await axios.patch(
+          `/api/${params.storeId}/billboards/${params.billboardId}`,
+          data
+        );
+      } else {
+        await axios.post(`/api/${params.storeId}/billboards`, data);
+      }
       router.refresh();
-      toast.success("Store updated.");
+      router.push(`/${params.storeId}/billboards`);
+      toast.success(toastMessage);
     } catch (error) {
       toast.error("Something went wrong");
     } finally {
       setLoading(false);
     }
-    console.log(data);
   };
 
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/stores/${params.storeId}`);
+      await axios.delete(
+        `/api/${params.storeId}/billboards/${params.billboardId}`
+      );
       router.refresh();
       router.push("/");
-      toast.success("Store deleted.");
+      toast.success("Billboard deleted.");
     } catch (error) {
       toast.error(
-        "Make sure you removed all products and categories first."
+        "Make sure you removed all categories using this billboard first."
       );
     } finally {
       setLoading(false);
