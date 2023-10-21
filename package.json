@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "shadcn": "npx shadcn-ui@latest add"
+    "shadcn": "npx shadcn-ui@latest add",
+    "prisma": "npx prisma generate && npx prisma db push"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.25.3",
@@ -24,6 +25,7 @@
     "cmdk": "^0.2.0",
     "lucide-react": "^0.284.0",
     "next": "13.5.4",
+    "next-cloudinary": "^4.27.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.47.0",
