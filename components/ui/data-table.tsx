@@ -1,8 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-
+import { useState } from "react";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -21,7 +19,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -55,13 +54,10 @@ export function DataTable<TData, TValue>({
         <Input
           placeholder="Search"
           value={
-            (table.getColumn("searchKey")?.getFilterValue() as string) ??
-            ""
+            (table.getColumn(searchKey)?.getFilterValue() as string) ?? ""
           }
           onChange={(event) =>
-            table
-              .getColumn("searchKey")
-              ?.setFilterValue(event.target.value)
+            table.getColumn(searchKey)?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
