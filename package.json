@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "shadcn": "npx shadcn-ui@latest add",
-    "prisma": "npx prisma generate && npx prisma db push"
+    "prisma": "npx prisma generate && npx prisma db push",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.25.3",
